@@ -1,2 +1,4 @@
 # Assignment1
-hihihihi
+
+Example of displaying an image in Markdown syntax:
+![image description](1.jpg)
