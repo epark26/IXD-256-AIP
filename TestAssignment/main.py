@@ -7,17 +7,28 @@ sensor_val = None
 button_val = None
 
 # load font data and assign it to variable:
-NeueHaasUnica_font = p5.loadFont('NeueHaasUnica-Bold.ttf')
+NeueHaasUnica_font = p5.loadFont('NeueHaasUnica-ExtraBold.ttf')
 
 def setup():
   p5.createCanvas(400, 400)
+  p5.background(167, 167, 211)
   p5.rectMode(p5.CENTER)
+  p5.noStroke()
+  p5.fill(234, 234,234)
+  p5.rect(200, 200, 250, 150, 10)
+  p5.fill(167, 167, 211)
 
+    # Draw a grid of rectangles
+  for x in range(4):
+      for y in range(2):
+          p5.fill(167, 167, 211)
+          p5.rect(125 + x * 50, 200 + y * 45, 40, 40, 10)
 
 def draw():
-  p5.background(167, 167, 211)
   global data_string, data_list
-  global sensor_val, button_val
+  global sensor_val, button_val, num_circles
+
+  colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255)]
         
   # assign content of "data" div on index.html page to variable:
   data_string = document.getElementById("data").innerText
@@ -29,49 +40,41 @@ def draw():
   # assign 2nd item of data_list to sensor_val:
   button_val = int(data_list[1])
 
+  p5.fill(240, 78, 35)  # Set the text fill color to orange
+  p5.textFont(NeueHaasUnica_font)  # Use the "Neue Haas Unica" font
+  p5.textSize(24)
+  p5.textStyle(p5.BOLD)
+  p5.text("happy card", 135, 160)
+
   p5.noStroke()  # disable stroke
+
+  p5.fill(233, 230, 31)
+  p5.ellipse(125, 200, 40, 40)
+  if button_val == 1:
+      # Cycle through colors when the button is pressed
+      current_color_index = frameCount % len(colors)
+      p5.fill(*colors[current_color_index])
+  else:
+      # Use the default color when the button is not pressed
+      p5.fill(233, 230, 31)
+
   
-  # draw circle changing size with sensor data:
-  # ellipse function takes (x, y, width, height)
-  # map function takes (value, in_min, in_max, out_min, out_max)
-  circle_size = p5.map(sensor_val, 0, 255, 25, 100)
-  p5.ellipse(75, 75, circle_size, circle_size)
-  
+  color_index = p5.floor(p5.map(sensor_val, 0, 255, 0, len(colors)))
+  triangle_color = colors[color_index]
   # draw square changing color with sensor data:
   # fill function can take (red, green, blue)
-  p5.fill(sensor_val, 0, 255 - sensor_val)  
+  p5.fill(240, 78, 35) 
   # rectangle function takes (x, y, width, height)
-  p5.rect(225, 75, 100, 100)
+  x1 = 160
+  y1 = 215
+  x2 = x1 + 34
+  y2 = y1
+  x3 = x1 + 17
+  y3 = y1 - 34
 
-  # draw text:
-  p5.fill(255)  # white fill
-  # use font installed on computer:
-  p5.textFont('Courier')
-  p5.textSize(18)
-  p5.text(sensor_val, 190, 65)
-  # use font from loaded font file:
-  p5.textFont(jellee_font)
-  p5.textSize(24)
-  p5.text(button_val, 190, 100)
+  p5.fill(*triangle_color)
+  p5.triangle(x1, y1, x2, y2, x3, y3)
 
-  # draw lines responding to button data:
-  for i in range(8):
-    if(button_val == 0):
-      p5.strokeWeight(i+1)
-    else:
-      p5.strokeWeight(8-i)
-    p5.stroke(0)
-    # line function takes (x1, y1, x2, y2)
-    x1 = x2 = 25 + i * 14
-    y1 = 175
-    y2 = 275
-    p5.line(x1, y1, x2, y2)
-
-  # draw image rotating with sensor data:
-  p5.push()  # save transformation coordinates
-  p5.translate(225, 225)  # move coordinates by (x, y)
-  # use sensor_val as degrees converted to radians:
-  angle = p5.radians(sensor_val)  
   p5.rotate(angle)  # rotate coordinates
   # image function takes (image, x, y, width, height)
   p5.image(swirl_img, 0, 0, 100, 100)
