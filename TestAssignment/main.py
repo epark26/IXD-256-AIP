@@ -6,32 +6,19 @@ data_list = None
 sensor_val = None
 button_val = None
 
-# load image data and assign it to variable:
-swirl_img = p5.loadImage('swirl.png')
-
 # load font data and assign it to variable:
-Gillsans_font = p5.loadFont('GillSans.ttf')
-
-import js as p5
+NeueHaasUnica_font = p5.loadFont('NeueHaasUnica-Bold.ttf')
 
 def setup():
-    p5.createCanvas(400, 400)
-    p5.rectMode(p5.CENTER)
-    p5.background(167, 167, 211)
+  p5.createCanvas(400, 400)
+  p5.rectMode(p5.CENTER)
+
 
 def draw():
-    p5.fill(255)
-    
-    p5.rect(150, 150, 200, 100)
-
-    # Change the font to "Gill Sans"
-    p5.textFont("Gill Sans")
-    p5.textSize(24)
-    p5.text("Hello, Gill Sans!", 100, 50)
-
+  p5.background(167, 167, 211)
   global data_string, data_list
   global sensor_val, button_val
-
+        
   # assign content of "data" div on index.html page to variable:
   data_string = document.getElementById("data").innerText
   # split data_string by comma, making a list:
@@ -43,8 +30,6 @@ def draw():
   button_val = int(data_list[1])
 
   p5.noStroke()  # disable stroke
-  # fill function can take 1 argument (gray)
-  p5.fill(0)  # black fill
   
   # draw circle changing size with sensor data:
   # ellipse function takes (x, y, width, height)
