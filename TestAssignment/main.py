@@ -75,7 +75,3 @@ def draw():
   p5.fill(*triangle_color)
   p5.triangle(x1, y1, x2, y2, x3, y3)
 
-  p5.rotate(angle)  # rotate coordinates
-  # image function takes (image, x, y, width, height)
-  p5.image(swirl_img, 0, 0, 100, 100)
-  p5.pop()  # restore transformation coordinates
