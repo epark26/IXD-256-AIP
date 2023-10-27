@@ -7,7 +7,7 @@ sensor_val = None
 button_val = None
 
 # load font data and assign it to variable:
-NeueHaasUnica_font = p5.loadFont('NeueHaasUnica-ExtraBold.ttf')
+NeueHaasUnica_font = p5.loadFont('NeueHaasUnica-Bold.ttf')
 
 def setup():
   p5.createCanvas(400, 400)
@@ -74,4 +74,5 @@ def draw():
 
   p5.fill(*triangle_color)
   p5.triangle(x1, y1, x2, y2, x3, y3)
+
 
