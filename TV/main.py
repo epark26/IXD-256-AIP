@@ -43,5 +43,6 @@ def draw():
     p5.image(NEWTV_img, 200, 200, 400, 400)
     button_state = 'DOWN'
   elif(button_val == 0):
+    p5.image(TV_img, 200, 200, 400, 400)
     button_state = 'UP'
    
