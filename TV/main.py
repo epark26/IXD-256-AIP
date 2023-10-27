@@ -39,8 +39,9 @@ def draw():
   p5.noStroke()  # disable stroke
   p5.image(TV_img, 200, 200, 400, 400)
 
-  if button_val == 1:
-    # Display the new image when the button is pressed (assuming button_val indicates the button is pressed)
+  if(button_val == 1) and (button_state == 'UP'):
     p5.image(NEWTV_img, 200, 200, 400, 400)
+    button_state = 'DOWN'
   elif(button_val == 0):
-    p5.image(TV_img, 200, 200, 400, 400)
+    button_state = 'UP'
+   
