@@ -13,7 +13,7 @@ swirl_img = p5.loadImage('swirl.png')
 jellee_font = p5.loadFont('Jellee.otf')
 
 def setup():
-  p5.createCanvas(300, 300)
+  p5.createCanvas(400, 400)
   # change mode to draw rectangles from center:
   p5.rectMode(p5.CENTER)
   # change mode to draw images from center:
@@ -22,7 +22,7 @@ def setup():
   p5.strokeCap(p5.SQUARE)
 
 def draw():
-  p5.background(255)
+  p5.background(167, 167, 211)
   global data_string, data_list
   global sensor_val, button_val
 
