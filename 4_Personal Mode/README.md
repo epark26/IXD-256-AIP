@@ -1,6 +1,6 @@
 ## Introduction   
 
-My Personal Mode:
+### My Personal Mode
 
 The concept revolves around a personalized interactive system. The system is designed to enhance different aspects of daily life, such as exercise, sleep, and work, by integrating technology and automation. Each acrylic board corresponds to a particular activity or mode, and when inserted into the wood box, it initiates a set of actions, including music playback, messaging, and notifications. 
 
