@@ -14,7 +14,7 @@ Note the use of relative paths in links.  The dot slash `./` in link path means 
 To insert images, the syntax is almost the same with the addition of exclamation point `!` before [image description in square brackets] followed by (image link in parentheses).  The image below is included with:  
 `![led blink circuit](../class02/led_blink_bb.png)` syntax.  
 
-![blink led circuit](../class02/led_blink_bb.png) 
+![blink led circuit](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/3%20DifferentMode.JPG?raw=true) 
 
 ## Implementation   
 
