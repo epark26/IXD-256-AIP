@@ -204,7 +204,7 @@ if __name__ == '__main__':
 
 ### Software   
 
-IFTTT mqtt
+#### IFTTT mqtt
 ```     
       if program_state == 'OFF':
 
@@ -243,7 +243,7 @@ IFTTT mqtt
             program_state = 'OFF'
 ``` 
 
-Led Color
+#### Led Color
 ```     
         if time.ticks_ms() > mqtt_timer + 1000: 
         if program_state == 'music':
@@ -272,26 +272,26 @@ IFTTT Trigger
 
 ### Enclosure / Mechanical Design   
 
-woodboard
+#### woodboard
 ![laser cut1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Raser-cut-1.jpg) 
 ![laser cut1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/wood%2BLight.JPG) 
 
-Mode
+#### Mode
 ![laser cut2](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Raser-cut-2.jpg) 
 ![laser cut2](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/3%20DifferentMode.JPG) 
 
 ## Project outcome  
 
-Sleep Mode
+#### Sleep Mode
 ![Sleep](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/sleepmode_final.jpg) 
 
-Exercise Mode
+#### Exercise Mode
 ![exercise](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/exercise_final.jpg) 
 
-Work Mode
+#### Work Mode
 ![work](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/workmode_final.jpg) 
 
-Prototyping Video
+#### Prototyping Video
 ![Final](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Full%20Prototyping.gif) 
 ![Final](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Level%20of%20Brightness.gif) 
 
