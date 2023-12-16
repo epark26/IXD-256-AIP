@@ -9,48 +9,291 @@ When I insert the acrylic board into the wood box, it triggers predefined action
 ### Formatting Tips  
    
 ![Formatting 1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Formatting.jpg) 
+![Formatting gif](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Formatting.gif) 
 
 ## Implementation   
 
-Explain your process of prototype development including all applicable aspects such as hardware (electronics), firmware (MicroPython code), software (HTML/CSS/JavaScript or other code), integrations (Adafruit IO, IFTTT, etc.), enclosure and mechanical design.  Use a separate subheader for each part:
-
 ### Hardware
-
-List all the separate hardware components used in your project and briefly explain what they do.  To create a list with markdown syntax, use `-`, `*`, or `+` characters with each line of text:  
-* item 1  
-* item 2   
-* etc.  
-
-Include a schematic diagram image (hand-drawn is OK) showing all the wiring connections between the M5Stack AtomS3 board and other components.  
-
-In addition, include at least one photo showing your hardware wiring.  This can be several close-ups with the goal of showing how the wiring connections are made.  
+ 
+* AtomS3 Lite ESP32S3 Dev Kit 
+* ATOMIC PortABC Extension Base 
+* Tactile Button switch (6mm) x 20 pack
+* Mini Angle Unit Rotary Switch with Potentiometer
+* Half-Size Breadboard with Mounting Holes
+* Jumper Wire
+* USB C
 
 ### Firmware   
 
-Provide a link to your MicroPython code and explain a few important parts that make your prototype work.  Most likely you should explain the inputs/outputs used in your code and how they affect the behavior of the prototype.
+Full Code
 
-To include code snippets, you can use the code block markdown, like this:
+``` import os
+import sys
+import io
+from M5 import *
+from machine import Pin, ADC
+from umqtt import MQTTClient
+from hardware import *
+import time
+from time import sleep_ms
+from driver.neopixel import NeoPixel
 
-``` Python  
-if(input_val > 1000):  # sensor value higher than threshold
-   led_pin.on()  # turn on LED
+mqtt_client = None
+user_name = 'eunju_pp'
+mqtt_timer = 0
+adc = None
+adc_val = None
+rgb = None
+
+np = None
+
+
+OFF = [(0, 0, 0),(0, 0, 0),(0, 0, 0),
+      (0, 0, 0),(0, 0, 0),(0, 0, 0),
+       (0, 0, 0),(0, 0, 0),(0, 0, 0),
+       (0, 0, 0),(0, 0, 0),(0, 0, 0),(0, 0, 0)]
+
+sleep = [
+    (255,140,0),(255,140,0),(255,140,00),
+    (255,140,0),(255,140,0),(255,140,0),(255,140,0)]
+
+music = [
+    (255, 0, 0),(255, 165, 0),(255, 255, 0),
+    (0, 128, 0),(0, 0, 255),(75, 0, 130),(48, 0, 211)]
+
+work = [
+    (30,144,25),(95,158,160),(30,144,25),
+    (95,158,160),(30,144,25),(95,158,160),(30,144,25)]
+
+btn_sleep = Pin(38, Pin.IN, Pin.PULL_UP)
+btn_music = Pin(8, Pin.IN, Pin.PULL_UP)
+btn_work = Pin(7, Pin.IN, Pin.PULL_UP)
+adc = ADC(Pin(6), atten=ADC.ATTN_11DB)  
+
+mqtt_timer = 0
+program_state = 'OFF'
+states = ['sleep', 'music', 'work']
+
+def setup():
+    M5.begin()
+    global np
+    global mqtt_client
+    global adc, adc_val
+    np = NeoPixel(pin=Pin(2), n=7)
+    mqtt_client = MQTTClient(
+        'testclient',
+        'io.adafruit.com',
+        port=1883, 
+        user=user_name,
+        password='aio_twuw742hgZ7d5KflVmgzvlesdhgv',
+    )
+    mqtt_client.connect(clean_session=True)
+
+def set_colors(color, adc_val):
+    global np
+    if np is not None and isinstance(np, NeoPixel):
+        for i in range(min(len(np), len(color))):
+            r, g, b = color[i]
+            brightness = map_value(adc_val, 0, 4025, 0, 255)
+            r = int(r * brightness / 255)
+            g = int(g * brightness / 255)
+            b = int(b * brightness / 255)
+            np[i] = (r, g, b)
+        np.write()
+    else:
+        print("Error: NeoPixel object not properly initialized.")
+
+
+def publish_mqtt(topic, message):
+    global mqtt_client
+    if mqtt_client is not None:
+        print("Publishing MQTT:", topic, "Message:", message)
+        mqtt_client.connect(clean_session=True)
+        mqtt_client.publish(topic, message, qos=0)
+
+music_published = False
+work_published = False
+sleep_published = False
+
+
+def loop():
+    global np, mqtt_client, mqtt_timer
+    global sleep, music, work
+    global adc_val, program_state, music_published, work_published, sleep_published
+    M5.update()
+
+    # Read ADC value
+    adc_val = adc.read()  
+
+    if program_state == 'OFF':
+
+        if not btn_music.value() and not music_published:
+            print('music_trigger')
+            mqtt_client.publish(user_name+'/feeds/Music', 'ON', qos=0)
+            program_state = 'music'
+            music_published = True
+            work_published = False
+            sleep_published = False
+
+        elif not btn_work.value() and not work_published:
+            print('work_trigger')
+            mqtt_client.publish(user_name+'/feeds/study', 'ON', qos=0)
+            program_state = 'work'
+            music_published = False
+            work_published = True
+            sleep_published = False
+
+        elif not btn_sleep.value() and not sleep_published:
+            print('sleep_trigger')
+            mqtt_client.publish(user_name+'/feeds/sleep', 'ON', qos=0)
+            program_state = 'sleep'
+            music_published = False
+            work_published = False
+            sleep_published = True
+
+
+    else:
+        music_published = False
+        work_published = False
+        sleep_published = False
+
+        # Check for button release to transition back to 'OFF' state
+        if btn_music.value() and btn_work.value() and btn_sleep.value():
+            program_state = 'OFF'
+
+    # condition for changing the LED color every 2.5 seconds
+    if time.ticks_ms() > mqtt_timer + 1000: 
+        if program_state == 'music':
+            print('music')
+            set_colors(music, adc_val)
+
+        elif program_state == 'work':
+            print('work')
+            set_colors(work, adc_val)
+
+        elif program_state == 'sleep':
+            print('sleep')
+            set_colors(sleep, adc_val)
+
+        # reset the timer
+        mqtt_timer = time.ticks_ms()
+
+
+# map an input value (v_in) between min/max ranges:
+def map_value(in_val, in_min, in_max, out_min, out_max):
+  v = out_min + (in_val - in_min) * (out_max - out_min) / (in_max - in_min)
+  if (v < out_min): 
+    v = out_min 
+  elif (v > out_max): 
+    v = out_max
+  return int(v)
+
+if __name__ == '__main__':
+    try:
+        setup()
+        while True:
+            loop()
+    except (Exception, KeyboardInterrupt) as e:
+        try:
+            from utility import print_error_msg
+            print_error_msg(e)
+        except ImportError:
+            pass
 ```
+
 
 ### Software   
 
-If applicable, explain the important software components of your project with relevant code snippets and links.  
+IFTTT mqtt
+```     
+      if program_state == 'OFF':
 
+        if not btn_music.value() and not music_published:
+            print('music_trigger')
+            mqtt_client.publish(user_name+'/feeds/Music', 'ON', qos=0)
+            program_state = 'music'
+            music_published = True
+            work_published = False
+            sleep_published = False
+
+        elif not btn_work.value() and not work_published:
+            print('work_trigger')
+            mqtt_client.publish(user_name+'/feeds/study', 'ON', qos=0)
+            program_state = 'work'
+            music_published = False
+            work_published = True
+            sleep_published = False
+
+        elif not btn_sleep.value() and not sleep_published:
+            print('sleep_trigger')
+            mqtt_client.publish(user_name+'/feeds/sleep', 'ON', qos=0)
+            program_state = 'sleep'
+            music_published = False
+            work_published = False
+            sleep_published = True
+
+
+    else:
+        music_published = False
+        work_published = False
+        sleep_published = False
+
+        # Check for button release to transition back to 'OFF' state
+        if btn_music.value() and btn_work.value() and btn_sleep.value():
+            program_state = 'OFF'
+``` 
+
+Led Color
+```     
+        if time.ticks_ms() > mqtt_timer + 1000: 
+        if program_state == 'music':
+            print('music')
+            set_colors(music, adc_val)
+
+        elif program_state == 'work':
+            print('work')
+            set_colors(work, adc_val)
+
+        elif program_state == 'sleep':
+            print('sleep')
+            set_colors(sleep, adc_val)
+
+        # reset the timer
+        mqtt_timer = time.ticks_ms()
+```  
 ### Integrations   
 
-Include a link to and/or screenshots of other functional components of your project, like Adafruit IO feeds, dashboards, IFTTT applets, etc.  In general, think of your audience as someone new trying to learn how to make your project and make sure to cover anything helpful to explain the functional parts of it.
+Adafruit feed
+![Adafruit data](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Adafruit_Data.png) 
+
+IFTTT Trigger
+![IFTTT](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/IFTTT.png) 
+
 
 ### Enclosure / Mechanical Design   
 
-Explain how you made the enclosure or any other physical or mechanical aspects of your project with photos, screenshots of relevant files such as laser-cut patterns, 3D models, etc. (it’s great if you’re willing to share the editable source files too!)
+woodboard
+![laser cut1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Raser-cut-1.jpg) 
+![laser cut1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/wood%2BLight.JPG) 
+
+Mode
+![laser cut2](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Raser-cut-2.jpg) 
+![laser cut2](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/3%20DifferentMode.JPG) 
 
 ## Project outcome  
 
-Summarize the results of your final project implementation and include at least 2 photos of the prototype and a video walkthrough of the functioning demo.
+Sleep Mode
+![Sleep](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/sleepmode_final.jpg) 
+
+Exercise Mode
+![exercise](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/exercise_final.jpg) 
+
+Work Mode
+![work](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/workmode_final.jpg) 
+
+Prototyping Video
+![Final](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Full%20Prototyping.gif) 
+![Final](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Level%20of%20Brightness.gif) 
 
 ## Conclusion  
 
