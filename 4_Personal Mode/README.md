@@ -1,6 +1,6 @@
 ## Introduction   
 
-![Formatting 1](https://github.com/epark26/IXD-256-AIP/tree/main/4_Personal%20Mode) 
+https://epark26.github.io/IXD-256-AIP/4_Personal_Mode/
 
 #### My Personal Mode
 
