@@ -10,6 +10,7 @@ When I insert the acrylic board into the wood box, it triggers predefined action
    
 ![Formatting 1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Formatting.jpg) 
 ![Formatting gif](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Formatting.gif) 
+![Formatting gif](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Inside.JPG) 
 
 ## Implementation   
 
@@ -25,7 +26,7 @@ When I insert the acrylic board into the wood box, it triggers predefined action
 
 ### Firmware   
 
-Full Code
+#### Full Code
 
 ``` import os
 import sys
@@ -263,10 +264,10 @@ if __name__ == '__main__':
 ```  
 ### Integrations   
 
-Adafruit feed
+#### Adafruit feed
 ![Adafruit data](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Adafruit_Data.png) 
 
-IFTTT Trigger
+#### IFTTT Trigger
 ![IFTTT](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/IFTTT.png) 
 
 
@@ -297,8 +298,18 @@ IFTTT Trigger
 
 ## Conclusion  
 
-As you wrap up the project, reflect on your experience of creating it.  Use this as an opportunity to mention any discoveries or challenges you came across along the way.  If there is anything you would have done differently, or have a chance to continue the project development given more time or resources, it’s a good way to conclude this section.
+### First Challenge: Continuous Notification During LED Activation
+
+The first challenge involved dealing with continuous notifications while the LED remained on. I wanted the LED to stay on continuously, but the notifications to come only once. As a solution, I separated the code into sections for the LED and the IFTTT (If This Then That) part. This process took quite some time.
+
+### Second Challenge: Potentiometer for LED Brightness Control
+
+The second challenge was to use a potentiometer to adjust the brightness of the LED. There were issues with the pin configuration, and despite multiple attempts, the problem could not be resolved. Fortunately, during the presentation, it started working smoothly.
+
+### Take away
+If I have more time, I'd like to add various modes instead of making it smaller. Additionally, I want to place an acrylic board just above the LED to enhance the display of colors more effectively.
+
 
 ## Project references  
 
-Please include links to any online resources like videos or tutorials that you may have found helpful in your process of implementing the prototype. If you used any substantial code from an online resource, make sure to credit the author(s) or sources.
+I only use nikita's github code and make design myself
