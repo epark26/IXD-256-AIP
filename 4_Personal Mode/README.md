@@ -1,6 +1,6 @@
 ## Introduction   
 
-### My Personal Mode
+#### My Personal Mode
 
 The concept revolves around a personalized interactive system. The system is designed to enhance different aspects of daily life, such as exercise, sleep, and work, by integrating technology and automation. Each acrylic board corresponds to a particular activity or mode, and when inserted into the wood box, it initiates a set of actions, including music playback, messaging, and notifications. 
 
@@ -298,15 +298,15 @@ if __name__ == '__main__':
 
 ## Conclusion  
 
-### First Challenge: Continuous Notification During LED Activation
+#### First Challenge: Continuous Notification During LED Activation
 
 The first challenge involved dealing with continuous notifications while the LED remained on. I wanted the LED to stay on continuously, but the notifications to come only once. As a solution, I separated the code into sections for the LED and the IFTTT (If This Then That) part. This process took quite some time.
 
-### Second Challenge: Potentiometer for LED Brightness Control
+#### Second Challenge: Potentiometer for LED Brightness Control
 
 The second challenge was to use a potentiometer to adjust the brightness of the LED. There were issues with the pin configuration, and despite multiple attempts, the problem could not be resolved. Fortunately, during the presentation, it started working smoothly.
 
-### Take away
+#### Take away
 If I have more time, I'd like to add various modes instead of making it smaller. Additionally, I want to place an acrylic board just above the LED to enhance the display of colors more effectively.
 
 
