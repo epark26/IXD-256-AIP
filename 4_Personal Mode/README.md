@@ -1,6 +1,5 @@
 ## Introduction   
 
-https://epark26.github.io/IXD-256-AIP/4_Personal_Mode/README.MD
 
 #### My Personal Mode
 
