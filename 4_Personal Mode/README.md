@@ -1,20 +1,14 @@
 ## Introduction   
 
-Provide a description of your initial project idea and include images of the concept sketches that you created in Part 1 of this assignment.  Explain the reasoning behind your final choice of the project concept, whether it’s based on one of the initial sketches, a combination of or a departure from the original concepts.  
-  
+My Personal Mode:
+
+The concept revolves around a personalized interactive system. The system is designed to enhance different aspects of daily life, such as exercise, sleep, and work, by integrating technology and automation. Each acrylic board corresponds to a particular activity or mode, and when inserted into the wood box, it initiates a set of actions, including music playback, messaging, and notifications. 
+
+When I insert the acrylic board into the wood box, it triggers predefined actions based on the set colors. First, when I want to exercise, inserting the workout acrylic board plays music on Spotify, and the color changes to a rainbow. Second, when I want to sleep, inserting the sleep acrylic board sends a message to my friends through Telegram, stating that I'll reply the next day, and the color changes to a yellowish hue. Third, when I want to focus on work, inserting the work acrylic board sends a notification to my phone saying 'Do not use your phone,' and the colors shift to green and blue.
+
 ### Formatting Tips  
    
-To format text into separate lines or paragraphs with [markdown syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax), include at least 2 spaces at the end.  The extra spaces act as line breaks.  
-
-Links can be inserted with [link text in square brackets] followed by (link URL in parantheses).  For example, the markdown for [link to this page](../assignment04/) on GitHub Pages is: 
-`[link to this page](../assignment04/)`  
-
-Note the use of relative paths in links.  The dot slash `./` in link path means the file is in the current directory, `../` means that it is in parent directory, `../../` is one more directory up and so on.  
-  
-To insert images, the syntax is almost the same with the addition of exclamation point `!` before [image description in square brackets] followed by (image link in parentheses).  The image below is included with:  
-`![led blink circuit](../class02/led_blink_bb.png)` syntax.  
-
-![blink led circuit](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/3%20DifferentMode.JPG?raw=true) 
+![Formatting 1](https://github.com/epark26/IXD-256-AIP/blob/main/4_Personal%20Mode/Photo/Formatting.jpg) 
 
 ## Implementation   
 
